@@ -68,6 +68,8 @@ function insertSmartObjectCode() {
       setTimeout(()=> {
         if(window.DYO) {
           DYO.smartObject("${name}", {target: "dy_holder", inline: true});
+    } else {
+      console.log('No window.DYO ! ! !')
     }
   }, 1000);
   `;

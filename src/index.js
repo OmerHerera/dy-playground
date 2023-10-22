@@ -58,7 +58,24 @@ function insertScript(path) {
   script.async = true;
   document.head.appendChild(script);
 }
+function insertSmartObjectCode() {
+  const name = decodeURIComponent(getValue('smartObject'));
+  if (name) {
+    const s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.async = true;
+    s.innerHTML = `
+      setTimeout(()=> {
+        if(window.DYO) {
+          DYO.smartObject("${name}", {target: "dy_holder", inline: true});
+    }
+  }, 1000);
+  `;
+    document.head.appendChild(s);
+  }
+}
 function init() {
+  insertSmartObjectCode();
   console.log('App inserting DY scripts');
   const sectionId = getValue('sectionId');
   const cdn = getValue('cdn') || 'cdn.dynamicyield.com';
@@ -67,7 +84,7 @@ function init() {
     insertScript(`${fullPath}/api_dynamic.js`);
     insertScript(`${fullPath}/api_static.js`);
     saveURLSearchParams();
-    setURLSearchParams()
+    setURLSearchParams();
   } else {
     console.log(`Missing one of the following sectionId: ${sectionId} fullPath: ${fullPath}`);
   }

@@ -1,3 +1,4 @@
+import { inject } from '@vercel/analytics';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -91,6 +92,7 @@ function init() {
     console.log(`Missing one of the following sectionId: ${sectionId} fullPath: ${fullPath}`);
   }
 }
+inject();
 init();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

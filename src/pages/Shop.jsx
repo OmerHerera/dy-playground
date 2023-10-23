@@ -6,13 +6,15 @@ import { products } from "../utils/products";
 import ShopList from "../components/ShopList";
 import Banner from "../components/Banner/Banner";
 import { DataContainer } from "../App";
+import { init } from './../../src/utils/browser-utils'
 
 const Shop = () => {
     const {addToCart} =useContext(DataContainer);
     const [filterList,setFilterList] = useState(products.filter(item => item.category ==="sofa"));
     useEffect(()=> {
         window.scrollTo(0,0);
-    },[])
+    }, [])
+    init();
     return ( 
         <Fragment>
             <Banner title="product"/>

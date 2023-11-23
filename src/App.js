@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import NavBar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Loader from "./components/Loader/Loader";
+import DYHolder from './components/DYHolder'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Home =lazy(()=> import("./pages/Home"))
@@ -59,6 +60,7 @@ function App() {
         theme="light"
         />
           <NavBar/>
+          <DYHolder />
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/shop' element={<Shop/>}/>

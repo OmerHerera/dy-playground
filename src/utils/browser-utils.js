@@ -71,8 +71,8 @@ export function insertScript(path) {
   document.head.appendChild(script);
 }
 
-export function insertSmartObjectCode() {
-  const name = decodeURIComponent(getValue('smartObject'));
+export function insertEmbedCode() {
+  const name = decodeURIComponent(getValue('embedCode'));
   if (name) {
     const s = document.createElement('script');
     s.type = 'text/javascript';
@@ -90,7 +90,7 @@ export function insertSmartObjectCode() {
   }
 }
 export function init() {
-  insertSmartObjectCode();
+  insertEmbedCode();
   console.log('🧰 App inserting DY scripts');
   const sectionId = getValue('sectionId');
   const cdn = getValue('cdn') || 'cdn.dynamicyield.com';

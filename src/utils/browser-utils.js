@@ -93,8 +93,8 @@ export function init() {
   insertEmbedCode();
   console.log('🧰 App inserting DY scripts');
   const sectionId = getValue('sectionId');
-  const cdn = getValue('cdn') || 'cdn.dynamicyield.com';
-  const fullPath = `https://${cdn}/api/${sectionId}`;
+  const cdn = getValue('cdn') || 'https://cdn.dynamicyield.com/api';
+  const fullPath = `${cdn}/${sectionId}`;
   if (sectionId && fullPath) {
     insertScript(`${fullPath}/api_dynamic.js`);
     insertScript(`${fullPath}/api_static.js`);

@@ -37,7 +37,11 @@ const customStyles = {
 
 const FilterSelect = ({setFilterList}) => {
     const handleChange = (selectedOption)=> {
-        setFilterList(products.filter(item => item.category ===selectedOption.value))
+        setFilterList(products.filter(item => item.category === selectedOption.value))
+        const url = new URL(window.location);
+        url.searchParams.set("category", selectedOption.value);
+        // eslint-disable-next-line
+        history.pushState({}, "", url);
     }
     return (
     <Select

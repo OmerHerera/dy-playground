@@ -4,7 +4,6 @@ import Section from "../components/Section"
 import {products ,discoutProducts } from "../utils/products"
 import { DataContainer } from "../App"
 import SliderHome from "../components/Slider"
-import { init } from './../../src/utils/browser-utils'
 
 const Home = () => {
   const {addToCart} = useContext(DataContainer);
@@ -13,7 +12,6 @@ const Home = () => {
   useEffect(()=> {
     window.scrollTo(0,0);
   }, [])
-  init();
   return (
     <Fragment>
       <SliderHome/>

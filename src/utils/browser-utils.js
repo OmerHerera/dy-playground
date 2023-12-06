@@ -89,18 +89,55 @@ export function insertEmbedCode() {
     document.head.appendChild(s);
   }
 }
+function getEnvironment() {
+  const sectionId = getValue('sectionId'); 
+  let env = 'us';
+  if (sectionId && sectionId?.charAt(0) == '9') {
+    env = 'eu';
+  }
+  return env;
+}
 export function init() {
-  insertEmbedCode();
   console.log('🧰 App inserting DY scripts');
-  const sectionId = getValue('sectionId');
-  const cdn = getValue('cdn') || 'https://cdn.dynamicyield.com/api';
-  const fullPath = `${cdn}/${sectionId}`;
-  if (sectionId && fullPath) {
-    insertScript(`${fullPath}/api_dynamic.js`);
-    insertScript(`${fullPath}/api_static.js`);
+  const env = getValue('env') || getEnvironment();
+  const sectionId = getValue('sectionId'); 
+  if (sectionId && !window.DYO) {
+    injectDYScripts(env, sectionId)
+    insertEmbedCode();
     saveURLSearchParams();
     setURLSearchParams();
   } else {
-    console.log(`🔴 Missing one of the following sectionId: ${sectionId} fullPath: ${fullPath}`);
+    console.log(`🔴 Missing one of the following sectionId: ${sectionId}`);
   }
+}
+
+function insertAfter(newNode, existingNode) {
+  existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
+}
+function createLink(href, rel) {
+  const link = document.createElement('link');
+  link.rel  = rel;
+  link.href = href;
+  return link;
+}
+function injectDYScripts(env, sectionId) {
+  const urls = { 
+    us: ['//rcom.dynamicyield.com', '//st.dynamicyield.com', '//cdn.dynamicyield.com'],
+    eu: ['//rcom-eu.dynamicyield.com', '//st-eu.dynamicyield.com', '//cdn-eu.dynamicyield.com'],
+    dev: ['//rcom.dynamicyield.com', '//st.dynamicyield.com', `//cdn-dev.dynamicyield.com/dev-use1-${env}`]
+  };
+  
+  // the following line its for getting the URLs from the urls in 'dev' key
+  env = (env !== 'us' && env !== 'eu') ? 'dev' : env
+  
+  const el = document.getElementById('preconnect')
+  urls[env].forEach(element => {
+    const dnsPrefetchLinkEl = createLink(element, 'dns-prefetch');
+    const preconnectLinkEl = createLink(element, 'preconnect');
+    insertAfter(dnsPrefetchLinkEl, el);
+    insertAfter(preconnectLinkEl, el);
+  });
+  const pathScript = urls[env][2];
+  document.getElementById('api_dynamic').src = `${pathScript}/api/${sectionId}/api_dynamic.js`;
+  document.getElementById('api_static').src = `${pathScript}/api/${sectionId}/api_static.js`;;
 }

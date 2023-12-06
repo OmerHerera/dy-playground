@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { init } from './../src/utils/browser-utils';
 window.addEventListener("beforeunload", function (e) {
   for (var key in localStorage) {
     if (key.indexOf('_qa_') === 0) {
@@ -25,3 +26,5 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+init();

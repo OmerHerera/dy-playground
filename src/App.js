@@ -17,13 +17,26 @@ function App() {
   const [CartItem, setCartItem] = useState([])
   const [selectedProduct,setSelectedProduct]=useState(null);
 
-  const addToCart = (product,num=1) => {
+  const addToCart = (product, num = 1) => {    
+    const addToCartObj = {
+      name: 'Add to Cart',
+      properties: {
+        dyType: 'add-to-cart-v1',
+        value: product.price,
+        currency: 'USD',
+        productId: product.id,
+        quantity: 1,
+        cart: CartItem,
+      }
+    };
     const productExit = CartItem.find((item) => item.id === product.id)
     if (productExit) {
       setCartItem(CartItem.map((item) => (item.id === product.id ? { ...productExit, qty: productExit.qty + num } : item)))
     } else {
       setCartItem([...CartItem, { ...product, qty: num }])
     }
+    // eslint-disable-next-line
+    DY.API('event', addToCartObj);
   }
 
   const decreaseQty = (product) => {

@@ -46,3 +46,28 @@ $ npm start
 ```
 👨‍💻 Happy coding!
 ---
+
+### Certificate for localhost
+
+#### Generating the certificate
+
+- Open a terminal and run the following command:
+
+```json
+openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
+  -keyout dy-playground.com.key -out dy-playground.com.crt -extensions san -config \
+  <(echo "[req]"; 
+    echo distinguished_name=req; 
+    echo "[san]"; 
+    echo subjectAltName=DNS:dy-playground.com,IP:10.0.0.1,IP:127.0.0.1
+    ) \
+  -subj "/CN=dy-playground.com"
+```
+
+- In the terminal run the following command:
+
+```json
+echo '127.0.0.1 dy-playground.com' | sudo tee -a /etc/hosts
+```
+
+- Once we have the certificates ready, we need to trust them. Just double click on the certificate dy-playground.com.crt to install it.

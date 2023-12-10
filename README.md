@@ -1,7 +1,8 @@
-# Maltimart Ecommerce
+# Multimart Ecommerce
 
 ## 📌 Live Demo
 
+[Demo](https://dy-playground.vercel.app/)
 
 ## 😎 Features
 
@@ -23,7 +24,7 @@
 
 From your command line, first clone this repo:
 
-```
+```bash
 # Clone this repository
 $ https://github.com/0mar-helal/multimart-react-ecommerce.git
 
@@ -37,14 +38,19 @@ $ git remote remove origin
 
 Then you can install the dependencies using NPM:
 
-```
+```bash
 # Install dependencies
 $ npm install
 
 # Start development server
 $ npm start
+
+## or using https server but only after running Certificate for localhost steps
+$  npm run start-http
 ```
+
 👨‍💻 Happy coding!
+
 ---
 
 ### Certificate for localhost
@@ -66,7 +72,7 @@ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
 
 - In the terminal run the following command:
 
-```json
+```bash
 echo '127.0.0.1 dy-playground.com' | sudo tee -a /etc/hosts
 ```
 

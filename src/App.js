@@ -5,25 +5,53 @@ import NavBar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Loader from "./components/Loader/Loader";
 import DYHolder from './components/DYHolder'
+import { setRecommendationContext } from "./utils/dy-utils";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Home =lazy(()=> import("./pages/Home"))
 const Shop =lazy(()=> import("./pages/Shop"))
 const Cart =lazy(()=> import("./pages/Cart"))
-const ProductDetails =lazy(()=> import("./pages/ProductDetails"));
+const ProductDetails = lazy(() => import("./pages/ProductDetails"));
 export const DataContainer = createContext();
 function App() {
-
   const [CartItem, setCartItem] = useState([])
-  const [selectedProduct,setSelectedProduct]=useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  // eslint-disable-next-line
+  const [context, setContext] = useState(DY.recommendationContext.type);
+  const [data, setData] = useState('');
+  const [language, setLanguage] = useState('');
+  const setRecommendationContextApp = async({ type, extra, data }) => {
+    const res = await setRecommendationContext({ type, extra, data });
+    if (res.data) {
+      setData(res.data);
+    }
+    if (res.lng) {
+      setLanguage(res.lng);
+    }
+    setContext(res.type);
+    return true;
+  }
 
-  const addToCart = (product,num=1) => {
+  const addToCart = (product, num = 1) => {    
+    const addToCartObj = {
+      name: 'Add to Cart',
+      properties: {
+        dyType: 'add-to-cart-v1',
+        value: product.price,
+        currency: 'USD',
+        productId: product.id,
+        quantity: 1,
+        cart: CartItem,
+      }
+    };
     const productExit = CartItem.find((item) => item.id === product.id)
     if (productExit) {
       setCartItem(CartItem.map((item) => (item.id === product.id ? { ...productExit, qty: productExit.qty + num } : item)))
     } else {
       setCartItem([...CartItem, { ...product, qty: num }])
     }
+    // eslint-disable-next-line
+    DY.API('event', addToCartObj);
   }
 
   const decreaseQty = (product) => {
@@ -45,7 +73,7 @@ function App() {
       localStorage.setItem("cartItem",JSON.stringify(CartItem));
   },[CartItem])
   return (
-    <DataContainer.Provider value={{CartItem,setCartItem,addToCart,decreaseQty,deleteProduct,selectedProduct,setSelectedProduct}}>
+    <DataContainer.Provider value={{CartItem,setCartItem,addToCart,decreaseQty,deleteProduct,selectedProduct,setSelectedProduct, setRecommendationContextApp: setRecommendationContextApp}}>
       <Suspense fallback={<Loader/>}>
         <Router>
         <ToastContainer
@@ -59,7 +87,7 @@ function App() {
         pauseOnHover
         theme="light"
         />
-          <NavBar/>
+          <NavBar context={context} data={data} language={language} setRecommendationContextApp={setRecommendationContextApp} />
           <DYHolder />
           <Routes>
             <Route path='/' element={<Home/>}/>

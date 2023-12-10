@@ -1,5 +1,6 @@
 import Select from 'react-select';
 import { products } from '../utils/products';
+import { useEffect } from 'react';
 
 const options = [
     { value: "sofa", label: "Sofa" },
@@ -35,17 +36,42 @@ const customStyles = {
     }),
 };
 
-const FilterSelect = ({setFilterList}) => {
-    const handleChange = (selectedOption)=> {
-        setFilterList(products.filter(item => item.category ===selectedOption.value))
+const FilterSelect = ({ setFilterList, setRecommendationContextApp }) => {
+    function getDefault() {
+        const url = new URL(window.location);
+        const categoryFromURL = url.searchParams.get('category') || '';
+        const value = url.searchParams.get('category') || ''
+        const label = `${categoryFromURL.charAt(0).toUpperCase()}${categoryFromURL.slice(1)}`
+        let selected = null;
+        if (value) {
+            selected = {
+                value,
+                label
+            };
+        };
+        return selected || { value: "", label: "Filter By Category" };
+    }
+
+    useEffect(() => {
+        const def = getDefault();
+        def && handleChange(def);
+    }, []);
+
+    const handleChange = (selectedOption) => {
+        selectedOption.value && setFilterList(products.filter(item => item.category === selectedOption.value))
+        const url = new URL(window.location);
+        url.searchParams.set("category", selectedOption.value);
+        // eslint-disable-next-line
+        selectedOption?.value && history.pushState({}, "", url);
+        selectedOption?.value && setRecommendationContextApp({ type: 'CATEGORY' });
     }
     return (
-    <Select
-    options={options}
-    defaultValue={{ value: "", label: "Filter By Category" }}
-    styles={customStyles}
-    onChange={handleChange}
-    />
+        <Select
+            options={options}
+            defaultValue={getDefault()}
+            styles={customStyles}
+            onChange={handleChange}
+        />
     );
 };
 

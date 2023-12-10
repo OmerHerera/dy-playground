@@ -1,7 +1,7 @@
 import { Container, Row } from "react-bootstrap"
 import Product from "./Product/Product"
 
-const Section = ({ title, bgColor , productItems, addToCart }) => {
+const Section = ({ title, bgColor , productItems, addToCart, setRecommendationContextApp }) => {
 return (
     <section style={{ background:bgColor }}> 
         <Container>
@@ -11,7 +11,7 @@ return (
             <Row className="justify-content-center">
                 {productItems.map((productItem) => {
                 return (
-                    <Product key={productItem.id} title={title} productItem={productItem} addToCart={addToCart}/>
+                    <Product key={productItem.id} title={title} productItem={productItem} addToCart={addToCart} setRecommendationContextApp={ setRecommendationContextApp} />
                 )
                 })}
             </Row>

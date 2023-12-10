@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { DataContainer } from "../../App";
 import { toast } from "react-toastify";
 
-const Product = ({title,productItem,addToCart}) => {
+const Product = ({ title, productItem, addToCart, setRecommendationContextApp }) => {
     const {setSelectedProduct} =useContext(DataContainer);
     const router =useNavigate();
     const [count, setCount] = useState(0);
@@ -14,7 +14,8 @@ const Product = ({title,productItem,addToCart}) => {
     }
     const handelClick =()=> {
         setSelectedProduct(productItem);
-        localStorage.setItem(`selectedProduct-${productItem.id}`,JSON.stringify(productItem));
+        localStorage.setItem(`selectedProduct-${productItem.id}`, JSON.stringify(productItem));
+        setRecommendationContextApp({ type: 'PRODUCT' });
         router(`/shop/${productItem.id}`);
     }
     const handelAdd =(productItem)=> {

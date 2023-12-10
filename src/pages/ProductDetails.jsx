@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 const ProductDetails = () => {
     const [listSelected,setListSelected] =useState("desc");
     const [relatedProducts,setRelatedProducts] =useState([]);
-    const {selectedProduct,setSelectedProduct,addToCart} =useContext(DataContainer);
+    const {selectedProduct,setSelectedProduct,addToCart, setRecommendationContextApp} = useContext(DataContainer);
     const {id} =useParams();
     if(!selectedProduct) {
         const storedProduct =localStorage.getItem(`selectedProduct-${id}`);
@@ -88,7 +88,7 @@ const ProductDetails = () => {
                 <Container>
                     <h3>You might also like</h3>
                 </Container>
-                <ShopList productItems={relatedProducts} addToCart={addToCart}/>
+                <ShopList productItems={relatedProducts} addToCart={addToCart} setRecommendationContextApp={setRecommendationContextApp} />
             </section>
         </Fragment>
     );

@@ -3,7 +3,7 @@ import { DataContainer } from "../App"
 import { Col, Container, Row } from "react-bootstrap";
 
 const Cart = () => {
-  const { CartItem, setCartItem, addToCart, decreaseQty, deleteProduct} =useContext(DataContainer);
+  const { CartItem, setCartItem, addToCart, decreaseQty, deleteProduct, setRecommendationContextApp} =useContext(DataContainer);
   const totalPrice = CartItem.reduce((price, item) => price + item.qty * item.price, 0)
   useEffect(()=> {
     window.scrollTo(0,0);
@@ -11,6 +11,7 @@ const Cart = () => {
       const storedCart = localStorage.getItem("cartItem");
       setCartItem(JSON.parse(storedCart));
     }
+    setRecommendationContextApp({ type: 'CART' });
   },[])
   return (
       <section className='cart-items'>

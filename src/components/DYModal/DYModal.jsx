@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { setRecommendationContext, extraContextData } from './../../utils/dy-utils';
+import { extraContextData } from './../../utils/dy-utils';
 
 
 export const ModalTypes = {
@@ -10,7 +10,7 @@ export const ModalTypes = {
   optOut: 'optOut',
   manager: 'manager'
 };
-export const DYModal = ({ type, show, handleClose, handlers }) => {
+export const DYModal = ({ type, show, handleClose, handlers, setRecommendationContextApp }) => {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginType, setLoginType] = useState('');
   const [sectionId, setSectionId] = useState('');
@@ -107,7 +107,7 @@ export const DYModal = ({ type, show, handleClose, handlers }) => {
                 <br />
                 <Button variant="primary" onClick={async () => {
                   const res = await handlers?.manager('context', context);
-                  const result = await setRecommendationContext({ type: context });
+                  const result = await setRecommendationContextApp({ type: context });
                  return res && result ? toast.success(`Context Changed ${context}`) : toast.error('Context change failed!')
               }} >Change Context</Button>
                 <br />
@@ -121,7 +121,7 @@ export const DYModal = ({ type, show, handleClose, handlers }) => {
                 <br />
                 <Button variant="primary" onClick={async () => {
                   const res = await handlers?.manager('data', data);
-                  const result = await setRecommendationContext({ extra: extraContextData.data, data });
+                  const result = await setRecommendationContextApp({ extra: extraContextData.data, data });
                  return res && result? toast.success(`Data Changed ${data}`) : toast.error('Data change failed!')
               }} >Change Data</Button>
               </Form.Group>
@@ -134,7 +134,7 @@ export const DYModal = ({ type, show, handleClose, handlers }) => {
                 <br />
                 <Button variant="primary" onClick={async () => {
                   const res = await handlers?.manager('lang', language);
-                  const result = await setRecommendationContext({ extra: extraContextData.lng, data: language });
+                  const result = await setRecommendationContextApp({ extra: extraContextData.lng, data: language });
                  return res && result ? toast.success(`Language Changed ${language}`) : toast.error('Language change failed!')
               }} >Change Language</Button>
               </Form.Group>

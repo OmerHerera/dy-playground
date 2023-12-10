@@ -35,13 +35,16 @@ export function goToNavigation(type) {
   let navType = '';
   switch (type) {
     case "/":
-      navType =  `/${window.location.search}`
+      navType =  `/`
+      // navType =  `/${window.location.search}`
       break;
       case "shop":
-        navType =  `/shop${window.location.search}`
+        navType =  `/shop`
+        // navType =  `/shop${window.location.search}`
       break;
       case "cart":
-        navType =  `/cart${window.location.search}`
+        // navType =  `/cart${window.location.search}`
+        navType =  `/cart`
         break;
   }
   return navType;
@@ -57,7 +60,7 @@ export function setURLSearchParams() {
         const url = new URL(window.location);
         const normalizeKey = key.replace(/_qa_/g, '')
         url.searchParams.set(`${normalizeKey}`, `${value}`);
-        window.history.pushState({}, '', url);
+        // window.history.pushState({}, '', url);
       }
     }
   }
@@ -105,7 +108,7 @@ export function init() {
     injectDYScripts(env, sectionId)
     insertEmbedCode();
     saveURLSearchParams();
-    setURLSearchParams();
+    // setURLSearchParams();
   } else {
     console.log(`🔴 Missing one of the following sectionId: ${sectionId}`);
   }

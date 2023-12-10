@@ -77,7 +77,7 @@ export async function manager(param, value, reload = false) {
   const url = new URL(window.location);
   url.searchParams.set(param, value);
   // eslint-disable-next-line
-  history.pushState({}, "", decodeURIComponent(url));
+  reload && history.pushState({}, "", decodeURIComponent(url));
   // Reload the page
   reload && window.location.reload();
   return true;
@@ -130,7 +130,7 @@ export async function setRecommendationContext({ type, extra, data }) {
   
   window.DY.recommendationContext = contextObj;
   
-  return true;
+  return contextObj;
 }
 
 export async function addToCart() { 

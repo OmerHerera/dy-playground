@@ -2,7 +2,7 @@ import { Row } from "react-bootstrap";
 import { useEffect } from "react";
 import Product from "./Product/Product";
 
-const ShopList = ({productItems,addToCart}) => {
+const ShopList = ({productItems,addToCart, setRecommendationContextApp}) => {
     useEffect(()=> {
     },[productItems])
     if(productItems.length ===0) {
@@ -15,7 +15,7 @@ const ShopList = ({productItems,addToCart}) => {
             <Row className="justify-content-center">
                 {productItems.map((productItem) => {
                 return (
-                    <Product key={productItem.id} title={null} productItem={productItem} addToCart={addToCart}/>
+                    <Product key={productItem.id} title={null} productItem={productItem} addToCart={addToCart} setRecommendationContextApp={ setRecommendationContextApp} />
                 )
                 })}
             </Row>

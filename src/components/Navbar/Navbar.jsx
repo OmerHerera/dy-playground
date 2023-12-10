@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react"
-import { Container, Nav, Navbar, Button, Form, Accordion } from "react-bootstrap";
+import { Container, Nav, Navbar, Button, Form } from "react-bootstrap";
 import { DYModal, ModalTypes } from './../DYModal/DYModal';
+import DYInfo from './../DYInfo/DYInfo';
 import "./navbar.css";
 import { DataContainer } from "../../App";
 import { goToNavigation } from './../../utils/browser-utils';
@@ -9,7 +10,7 @@ import { Link } from "react-router-dom";
 const home = goToNavigation('/');
 const shop = goToNavigation('shop');
 const cart = goToNavigation('cart');
-const NavBar = () => {
+const NavBar = ({ context, data, language, setRecommendationContextApp }) => {
   const { CartItem, setCartItem } = useContext(DataContainer);
   const [expand, setExpand] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
@@ -18,12 +19,6 @@ const NavBar = () => {
   const [show, setShow] = useState(false);
   const [handlers, setHandlers] = useState({});
   const [consent, setConsent] = useState(false);
-  // eslint-disable-next-line
-  const [context, setContext] = useState(DY?.recommendationContext?.type);
-  // eslint-disable-next-line
-  const [language, setLanguage] = useState(DY?.recommendationContext?.lng);
-  // eslint-disable-next-line
-  const [data, setData] = useState(DY?.recommendationContext?.data);
   const [modalType, setModalType] = useState('');
   
   function toggleConsentStatus() {
@@ -78,28 +73,15 @@ const NavBar = () => {
     setConsent(!!isConsent);
   }, []);
   
-  useEffect(() => {
-    // eslint-disable-next-line
-    setContext(DY?.recommendationContext?.type || '');
-    // eslint-disable-next-line
-    setLanguage(DY?.recommendationContext?.lng || '');
-    // eslint-disable-next-line
-    setData(DY?.recommendationContext?.data || '');
-    // eslint-disable-next-line
-  }, [DY?.recommendationContext?.type, DY?.recommendationContext?.lng, DY?.recommendationContext?.data]);
   return (
     <>
-      <DYModal show={show} type={modalType} handleClose={handleClose} handlers={handlers} />
+      <DYModal show={show} type={modalType} handleClose={handleClose} handlers={handlers} setRecommendationContextApp={setRecommendationContextApp} />
       <Navbar
         fixed="top"
         expand="md"
         className={isFixed ? "navbar fixed" : "navbar"}
       >
         <Container className="navbar-container">
-          {/* <Navbar.Brand to={home}>
-            <ion-icon name="bag"></ion-icon>
-            <h1 className="logo">Multimart</h1>
-          </Navbar.Brand> */}
           {/* Media cart and toggle */}
           <div className="d-flex">
             <div className="media-cart">
@@ -175,59 +157,7 @@ const NavBar = () => {
                   }}
                 />
               </Nav.Item>
-              <Accordion defaultActiveKey="0">
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>🇮 🇳 🇫 🇴 - 🇩 🇾 🇳 🇦 🇲 🇮 🇨</Accordion.Header>
-                  <Accordion.Body>
-                    {
-                      scripVer ?
-                        <span>
-                          #️⃣ Version: {scripVer}
-                        </span> : null
-                    }
-                    {
-                      dyId ?
-                        <>
-                          <br />
-                          <span>
-                          #️⃣ dyId: {dyId}
-                          </span>
-                        </>
-                        : null
-                    }
-                    {
-                      context ?
-                        <>
-                          <br />
-                          <span>
-                          ⚓ Context: {context}
-                          </span>
-                        </>
-                        : null
-                    }
-                    {
-                      language ?
-                        <>
-                          <br />
-                          <span>
-                          🌍 Lang: {language}
-                          </span>
-                        </>
-                        : null
-                    }
-                    {
-                      data ?
-                        <>
-                          <br />
-                          <span>
-                          💾 Data: {data}
-                          </span>
-                        </>
-                        : null
-                    }
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
+              <DYInfo scripVer={scripVer} dyId={dyId} context={context} data={data} language={language} />
             </Nav>
           </Navbar.Collapse>
         </Container>

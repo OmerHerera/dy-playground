@@ -8,9 +8,13 @@ import Banner from "../components/Banner/Banner";
 import { DataContainer } from "../App";
 
 const Shop = () => {
-    const {addToCart} =useContext(DataContainer);
+    const {addToCart, setRecommendationContextApp} =useContext(DataContainer);
     const [filterList,setFilterList] = useState(products.filter(item => item.category ==="sofa"));
-    useEffect(()=> {
+    useEffect(() => {
+        const url = new URL(window.location);
+        const cat = url.searchParams.get("category", );
+        // only if we arrive ti the component without category in the URL set PRODUCT context
+        !cat && setRecommendationContextApp({ type: 'PRODUCT' });
         window.scrollTo(0,0);
     }, [])
     return ( 
@@ -20,7 +24,7 @@ const Shop = () => {
                 <Container className="filter-bar-contianer">
                     <Row className="justify-content-center">
                         <Col md={4}>
-                            <FilterSelect setFilterList={setFilterList}/>
+                            <FilterSelect setFilterList={setFilterList} setRecommendationContextApp={ setRecommendationContextApp} />
                         </Col>
                         <Col md={8}>
                             <SearchBar setFilterList={setFilterList}/>
@@ -28,7 +32,7 @@ const Shop = () => {
                     </Row>
                 </Container>
                 <Container>
-                    <ShopList productItems={filterList} addToCart={addToCart}/>
+                    <ShopList productItems={filterList} addToCart={addToCart} setRecommendationContextApp={setRecommendationContextApp} />
                 </Container>
             </section>
         </Fragment>

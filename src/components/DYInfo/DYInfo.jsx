@@ -1,15 +1,25 @@
 import { Accordion } from "react-bootstrap";
-const DYInfo = ({ scripVer, dyId, context, data, language }) => {
+const DYInfo = ({ sectionId, scripVer, dyId, context, data, language }) => {
   return (
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
         <Accordion.Header>🇮 🇳 🇫 🇴 - 🇩 🇾 🇳 🇦 🇲 🇮 🇨</Accordion.Header>
         <Accordion.Body>
+        {
+            sectionId ?
+              <span>
+                #️⃣ SectionId: {sectionId}
+              </span> : null
+          }
           {
             scripVer ?
-              <span>
-                #️⃣ Version: {scripVer}
-              </span> : null
+              <>
+                <br />
+                <span>
+                ✏️ Script: {scripVer}
+                </span>
+              </>
+              : null
           }
           {
             dyId ?

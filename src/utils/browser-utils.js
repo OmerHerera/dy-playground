@@ -35,17 +35,21 @@ export function goToNavigation(type) {
   let navType = '';
   switch (type) {
     case "/":
-      navType =  `/`
+      navType = `/`
       // navType =  `/${window.location.search}`
       break;
-      case "shop":
-        navType =  `/shop`
-        // navType =  `/shop${window.location.search}`
+    case "shop":
+      navType = `/shop`
+      // navType =  `/shop${window.location.search}`
       break;
-      case "cart":
-        // navType =  `/cart${window.location.search}`
-        navType =  `/cart`
-        break;
+    case "cart":
+      // navType =  `/cart${window.location.search}`
+      navType = `/cart`
+      break;
+    case "other":
+      // navType =  `/cart${window.location.search}`
+      navType = `/other`
+      break;
   }
   return navType;
 }

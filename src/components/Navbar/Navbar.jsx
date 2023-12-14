@@ -10,7 +10,8 @@ import { Link } from "react-router-dom";
 const home = goToNavigation('/');
 const shop = goToNavigation('shop');
 const cart = goToNavigation('cart');
-const NavBar = ({ context, data, language, setRecommendationContextApp }) => {
+const other = goToNavigation('other');
+const NavBar = ({ sectionId, context, data, language, setRecommendationContextApp }) => {
   const { CartItem, setCartItem } = useContext(DataContainer);
   const [expand, setExpand] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
@@ -21,14 +22,17 @@ const NavBar = ({ context, data, language, setRecommendationContextApp }) => {
   const [consent, setConsent] = useState(false);
   const [modalType, setModalType] = useState('');
   
+  function firedUserActiveConsent(status) {
+    // eslint-disable-next-line
+    DY.userActiveConsent = { accepted: status };
+    // eslint-disable-next-line
+    DYO.ActiveConsent.updateConsentAcceptedStatus(status);
+  }
   function toggleConsentStatus() {
     const newStatus = !consent;
     localStorage.setItem('dy_playground_consent_status', newStatus);
     setConsent(newStatus);
-    // eslint-disable-next-line
-    DY.userActiveConsent = { accepted: newStatus };
-    // eslint-disable-next-line
-    DYO.ActiveConsent.updateConsentAcceptedStatus(newStatus);
+    firedUserActiveConsent(newStatus);
   }
 
   const handleClose = () => {
@@ -124,6 +128,13 @@ const NavBar = ({ context, data, language, setRecommendationContextApp }) => {
                   <span className="nav-link-label">Cart</span>
                 </Link>
               </Nav.Item>
+
+              <Nav.Item>
+                <Link aria-label="Go to Other Page" className="navbar-link" to={other} onClick={() => setExpand(false)}>
+                  <span className="nav-link-label">Other</span>
+                </Link>
+              </Nav.Item>
+
               <Nav.Item className="expanded-cart">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" className="nav-icon">
                   <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
@@ -157,7 +168,7 @@ const NavBar = ({ context, data, language, setRecommendationContextApp }) => {
                   }}
                 />
               </Nav.Item>
-              <DYInfo scripVer={scripVer} dyId={dyId} context={context} data={data} language={language} />
+              <DYInfo sectionId={sectionId} scripVer={scripVer} dyId={dyId} context={context} data={data} language={language} />
             </Nav>
           </Navbar.Collapse>
         </Container>

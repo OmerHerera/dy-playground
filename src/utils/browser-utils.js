@@ -47,7 +47,7 @@ export function goToNavigation(type) {
       navType =  `/cart?${params}`
       break;
     case "other":
-      navType =  `/shop?${params}`
+      navType =  `/other?${params}`
       break;
   }
   return navType;

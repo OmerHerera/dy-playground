@@ -1,0 +1,26 @@
+export const environments = [
+  { value: 'prod', label: 'prod' },
+  { value: 'release', label: 'release' },
+  { value: 'scale1', label: 'scale1' },
+  { value: 'scale2', label: 'scale2' },
+  { value: 'scale3', label: 'scale3' },
+  { value: 'scale4', label: 'scale4' },
+  { value: 'cdp1', label: 'cdp1' },
+  { value: 'cdp2', label: 'cdp2' },
+  { value: 'analytics1', label: 'analytics1' },
+  { value: 'analytics2', label: 'analytics2' },
+  { value: 'ssapi1', label: 'ssapi1' },
+  { value: 'ssapi2', label: 'ssapi2' },
+  { value: 'recs1', label: 'recs1' },
+  { value: 'recs2', label: 'recs2' },
+  { value: 'rtdf1', label: 'rtdf1' },
+  { value: 'rtdf2', label: 'rtdf2' },
+  { value: 'serving1', label: 'serving1' },
+  { value: 'serving2', label: 'serving2' },
+  { value: 'serving3', label: 'serving3' },
+  { value: 'msg1', label: 'msg1' },
+  { value: 'msg2', label: 'msg2' },
+  { value: 'eu', label: 'eu' },
+];
+
+

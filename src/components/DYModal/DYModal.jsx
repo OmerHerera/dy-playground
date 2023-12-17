@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
+import Select from 'react-select';
 import { extraContextData } from './../../utils/dy-utils';
+import { environments } from './../../utils/data.js'
 
 
 export const ModalTypes = {
@@ -18,6 +20,10 @@ export const DYModal = ({ type, show, handleClose, handlers, setRecommendationCo
   const [data, setData] = useState('');
   const [language, setLanguage] = useState('');
   const [context, setContext] = useState('');
+  const handleChange = (selectedOption) => {
+    setEnv(selectedOption?.value)
+  };
+
   let modalTitle = '';
   switch (type) {
     case ModalTypes.login:
@@ -58,7 +64,7 @@ export const DYModal = ({ type, show, handleClose, handlers, setRecommendationCo
           type === ModalTypes.login || type === ModalTypes.optIn ?
             <>
               <Form.Group className="mb-3" controlId="formCuId">
-                <Form.Control type="email" placeholder={type === ModalTypes.login ? 'CUID': 'Email'} onChange={(e) => {
+                <Form.Control type="email" placeholder={type === ModalTypes.login ? 'CUID' : 'Email'} onChange={(e) => {
                   setLoginEmail(e?.target?.value);
                 }} />
               </Form.Group>
@@ -69,28 +75,30 @@ export const DYModal = ({ type, show, handleClose, handlers, setRecommendationCo
           type === ModalTypes.manager ?
             <>
               <Form.Group className="mb-3" controlId="formSectionId">
-              <Form.Label>Section Id</Form.Label>
+                <Form.Label>Section Id</Form.Label>
                 <Form.Control type="text" placeholder="Section Id" onChange={(e) => {
                   setSectionId(e?.target?.value);
                 }} />
                 <br />
-              <Button variant="primary" onClick={async () => {
-                const res = await handlers?.manager('sectionId', sectionId, true);
-                 return res ? toast.success(`SectionId Changed ${sectionId}`) : toast.error('SectionId change failed!')
-              }}>Change SectionId</Button>
+                <Button variant="primary" onClick={async () => {
+                  const res = await handlers?.manager('sectionId', sectionId, true);
+                  return res ? toast.success(`SectionId Changed ${sectionId}`) : toast.error('SectionId change failed!')
+                }}>Change SectionId</Button>
               </Form.Group>
 
               
               <Form.Group className="mb-3" controlId="formEnv">
-              <Form.Label>Environment</Form.Label>
-                <Form.Control type="text" placeholder="Environment" onChange={(e) => {
-                  setEnv(e?.target?.value);
-                }} />
+                <Form.Label>Environment</Form.Label>
+                <Select
+                  options={environments}
+                  defaultValue={'Select Env'}
+                  onChange={handleChange}
+                />
                 <br />
-              <Button variant="primary" onClick={async () => {
-                const res = await handlers?.manager('env', env, true);
-                 return res ? toast.success(`Environment Changed ${sectionId}`) : toast.error('Environment change failed!')
-              }}>Change Environment</Button>
+                <Button variant="primary" onClick={async () => {
+                  const res = await handlers?.manager('env', env, true);
+                  return res ? toast.success(`Environment Changed ${sectionId}`) : toast.error('Environment change failed!')
+                }}>Change Environment</Button>
               </Form.Group>
               
               <Form.Group className="mb-3" controlId="formContext">
@@ -108,8 +116,8 @@ export const DYModal = ({ type, show, handleClose, handlers, setRecommendationCo
                 <Button variant="primary" onClick={async () => {
                   const res = await handlers?.manager('context', context);
                   const result = await setRecommendationContextApp({ type: context });
-                 return res && result ? toast.success(`Context Changed ${context}`) : toast.error('Context change failed!')
-              }} >Change Context</Button>
+                  return res && result ? toast.success(`Context Changed ${context}`) : toast.error('Context change failed!')
+                }} >Change Context</Button>
                 <br />
               </Form.Group>
 
@@ -117,26 +125,26 @@ export const DYModal = ({ type, show, handleClose, handlers, setRecommendationCo
                 <Form.Label>Data</Form.Label>
                 <Form.Control type="text" placeholder="SKU, SKU" onChange={(e) => {
                   setData(e?.target?.value);
-                }}/>
+                }} />
                 <br />
                 <Button variant="primary" onClick={async () => {
                   const res = await handlers?.manager('data', data);
                   const result = await setRecommendationContextApp({ extra: extraContextData.data, data });
-                 return res && result? toast.success(`Data Changed ${data}`) : toast.error('Data change failed!')
-              }} >Change Data</Button>
+                  return res && result ? toast.success(`Data Changed ${data}`) : toast.error('Data change failed!')
+                }} >Change Data</Button>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formLang">
                 <Form.Label>Language</Form.Label>
                 <Form.Control type="text" placeholder="en_GB" onChange={(e) => {
                   setLanguage(e?.target?.value);
-                }}/>
+                }} />
                 <br />
                 <Button variant="primary" onClick={async () => {
                   const res = await handlers?.manager('lang', language);
                   const result = await setRecommendationContextApp({ extra: extraContextData.lng, data: language });
-                 return res && result ? toast.success(`Language Changed ${language}`) : toast.error('Language change failed!')
-              }} >Change Language</Button>
+                  return res && result ? toast.success(`Language Changed ${language}`) : toast.error('Language change failed!')
+                }} >Change Language</Button>
               </Form.Group>
 
               
@@ -153,7 +161,7 @@ export const DYModal = ({ type, show, handleClose, handlers, setRecommendationCo
             <>
               <Button variant="primary" onClick={async () => {
                 const res = await handlers?.login(loginEmail, loginType);
-                 return res ? toast.success(`Login by ${loginType} : ${loginEmail}`) : toast.error('Login failed!')
+                return res ? toast.success(`Login by ${loginType} : ${loginEmail}`) : toast.error('Login failed!')
               }} >
                 Login
               </Button>
@@ -171,7 +179,7 @@ export const DYModal = ({ type, show, handleClose, handlers, setRecommendationCo
                 const res = await handlers?.optOut(loginEmail);
                 return res ? toast.success(`Opt Out:  ${loginEmail}`) : toast.error('Opt Out failed!')
               }} >Opt Out</Button>
-          </> : null
+            </> : null
         }
       </Modal.Footer>
     </Modal>

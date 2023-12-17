@@ -33,22 +33,21 @@ export function getURLSearchParams() {
 
 export function goToNavigation(type) {
   let navType = '';
+  const url = new URL(window.location);
+  const params = new URLSearchParams(url.search);
+  params.delete('category');
   switch (type) {
     case "/":
-      navType = `/`
-      // navType =  `/${window.location.search}`
+      navType =  `/?${params}`
       break;
     case "shop":
-      navType = `/shop`
-      // navType =  `/shop${window.location.search}`
+      navType =  `/shop?${params}`
       break;
-    case "cart":
-      // navType =  `/cart${window.location.search}`
-      navType = `/cart`
+    case "cart":      
+      navType =  `/cart?${params}`
       break;
     case "other":
-      // navType =  `/cart${window.location.search}`
-      navType = `/other`
+      navType =  `/shop?${params}`
       break;
   }
   return navType;
@@ -98,7 +97,7 @@ export function insertEmbedCode() {
 }
 function getEnvironment() {
   const sectionId = getValue('sectionId'); 
-  let env = 'us';
+  let env = 'prod';
   if (sectionId && sectionId?.charAt(0) == '9') {
     env = 'eu';
   }
@@ -129,13 +128,13 @@ function createLink(href, rel) {
 }
 function injectDYScripts(env, sectionId) {
   const urls = { 
-    us: ['//rcom.dynamicyield.com', '//st.dynamicyield.com', '//cdn.dynamicyield.com'],
+    prod: ['//rcom.dynamicyield.com', '//st.dynamicyield.com', '//cdn.dynamicyield.com'],
     eu: ['//rcom-eu.dynamicyield.com', '//st-eu.dynamicyield.com', '//cdn-eu.dynamicyield.com'],
     dev: ['//rcom.dynamicyield.com', '//st.dynamicyield.com', `//cdn-dev.dynamicyield.com/dev-use1-${env}`]
   };
   
   // the following line its for getting the URLs from the urls in 'dev' key
-  env = (env !== 'us' && env !== 'eu') ? 'dev' : env
+  env = (env !== 'prod' && env !== 'eu') ? 'dev' : env
   
   const el = document.getElementById('preconnect')
   urls[env].forEach(element => {

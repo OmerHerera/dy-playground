@@ -1,5 +1,5 @@
 import { Accordion } from "react-bootstrap";
-const DYInfo = ({ sectionId, scripVer, dyId, context, data, language }) => {
+const DYInfo = ({ sectionId, scripVer, dyId, context, data, language, env }) => {
   return (
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
@@ -10,6 +10,16 @@ const DYInfo = ({ sectionId, scripVer, dyId, context, data, language }) => {
               <span>
                 #️⃣ SectionId: {sectionId}
               </span> : null
+          }
+          {
+            env ?
+              <>
+                <br />
+                <span>
+                  ♻️ Env: {env}
+                </span>
+              </>
+              : null
           }
           {
             scripVer ?
@@ -26,7 +36,7 @@ const DYInfo = ({ sectionId, scripVer, dyId, context, data, language }) => {
               <>
                 <br />
                 <span>
-                  #️⃣ dyId: {dyId}
+                👤 dyId: {dyId}
                 </span>
               </>
               : null

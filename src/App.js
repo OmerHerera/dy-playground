@@ -19,6 +19,13 @@ function App() {
   function useSectionId() {
     return useMemo(() => getValue('sectionId'), [window.location.search]);
   }
+  function useEnv() {
+    return useMemo(() => { 
+      const env = getValue('env') || 'prod'
+
+      return env;
+    }, [window.location.search]);
+  }
 
   const [CartItem, setCartItem] = useState([])
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -94,7 +101,13 @@ function App() {
         pauseOnHover
         theme="light"
         />
-          <NavBar sectionId={ useSectionId() } context={context} data={data} language={language} setRecommendationContextApp={setRecommendationContextApp} />
+          <NavBar
+            sectionId={useSectionId()}
+            env={useEnv()}
+            context={context}
+            data={data}
+            language={language}
+            setRecommendationContextApp={setRecommendationContextApp} />
           <DYHolder />
           <Routes>
             <Route path='/' element={<Home/>}/>

@@ -11,7 +11,7 @@ const home = goToNavigation('/');
 const shop = goToNavigation('shop');
 const cart = goToNavigation('cart');
 const other = goToNavigation('other');
-const NavBar = ({ sectionId, context, data, language, setRecommendationContextApp }) => {
+const NavBar = ({ sectionId, context, data, language, setRecommendationContextApp, env }) => {
   const { CartItem, setCartItem } = useContext(DataContainer);
   const [expand, setExpand] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
@@ -168,7 +168,7 @@ const NavBar = ({ sectionId, context, data, language, setRecommendationContextAp
                   }}
                 />
               </Nav.Item>
-              <DYInfo sectionId={sectionId} scripVer={scripVer} dyId={dyId} context={context} data={data} language={language} />
+              <DYInfo sectionId={sectionId} scripVer={scripVer} dyId={dyId} context={context} data={data} language={language} env={ env} />
             </Nav>
           </Navbar.Collapse>
         </Container>

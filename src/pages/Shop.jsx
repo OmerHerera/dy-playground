@@ -9,14 +9,14 @@ import { DataContainer } from "../App";
 
 const Shop = () => {
     const {addToCart, setRecommendationContextApp} =useContext(DataContainer);
-    const [filterList,setFilterList] = useState(products.filter(item => item.category ==="sofa"));
+    const [filterList,setFilterList] = useState(products.filter(item => item.category === "sofa"));
     useEffect(() => {
         const url = new URL(window.location);
-        const cat = url.searchParams.get("category", );
+        const cat = url.searchParams.get("category");
         // only if we arrive ti the component without category in the URL set PRODUCT context
         !cat && setRecommendationContextApp({ type: 'PRODUCT' });
-        window.scrollTo(0,0);
-    }, [])
+        window.scrollTo(0, 0);
+    }, []);
     return ( 
         <Fragment>
             <Banner title="product"/>

@@ -8,7 +8,7 @@ import { goToNavigation } from './../../utils/browser-utils';
 import { login, optIn, optOut, manager } from './../../utils/dy-utils';
 import { Link } from "react-router-dom";
 const home = goToNavigation('/');
-const shop = goToNavigation('shop');
+const product = goToNavigation('product');
 const cart = goToNavigation('cart');
 const other = goToNavigation('other');
 const NavBar = ({ sectionId, context, data, language, setRecommendationContextApp, env }) => {
@@ -44,7 +44,6 @@ const NavBar = ({ sectionId, context, data, language, setRecommendationContextAp
     setModalType(type);
     if (optOutHandler) {
       setHandlers({
-        [ModalTypes.optIn]: handler,
         [ModalTypes.optOut]: optOutHandler,
       });
     } else {
@@ -112,14 +111,14 @@ const NavBar = ({ sectionId, context, data, language, setRecommendationContextAp
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="justify-content-end flex-grow-1 pe-3">
               <Nav.Item>
-                <Link aria-label="Go to Home Page" className="navbar-link" to={home} onClick={() => setExpand(false)}>
+              <Link aria-label="Go to Home Page" className="navbar-link" to={home} onClick={() => setExpand(false)}>
                   <span className="nav-link-label">Home</span>
                 </Link>
               </Nav.Item>
 
               <Nav.Item>
-                <Link aria-label="Go to Shop Page" className="navbar-link" to={shop} onClick={() => setExpand(false)}>
-                  <span className="nav-link-label">Shop</span>
+              <Link aria-label="Go to Shop Page" className="navbar-link" to={product} onClick={() => setExpand(false)}>
+                  <span className="nav-link-label">Product</span>
                 </Link>
               </Nav.Item>
 

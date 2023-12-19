@@ -16,7 +16,7 @@ const Product = ({ title, productItem, addToCart, setRecommendationContextApp })
         setSelectedProduct(productItem);
         localStorage.setItem(`selectedProduct-${productItem.id}`, JSON.stringify(productItem));
         setRecommendationContextApp({ type: 'PRODUCT' });
-        router(`/shop/${productItem.id}`);
+        router(`/product/${productItem.id}`);
     }
     const handelAdd =(productItem)=> {
         addToCart(productItem);

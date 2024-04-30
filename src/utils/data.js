@@ -1,6 +1,7 @@
 export const environments = [
   { value: 'prod', label: 'prod' },
   { value: 'release', label: 'release' },
+  { value: 'dydy.io', label: 'dydy.io' },
   { value: 'scale1', label: 'scale1' },
   { value: 'scale2', label: 'scale2' },
   { value: 'scale3', label: 'scale3' },

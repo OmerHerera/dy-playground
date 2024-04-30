@@ -130,11 +130,12 @@ function injectDYScripts(env, sectionId) {
   const urls = { 
     prod: ['//rcom.dynamicyield.com', '//st.dynamicyield.com', '//cdn.dynamicyield.com'],
     eu: ['//rcom-eu.dynamicyield.com', '//st-eu.dynamicyield.com', '//cdn-eu.dynamicyield.com'],
-    dev: ['//rcom.dynamicyield.com', '//st.dynamicyield.com', `//cdn-dev.dynamicyield.com/dev-use1-${env}`]
+    dev: ['//rcom.dynamicyield.com', '//st.dynamicyield.com', `//cdn-dev.dynamicyield.com/dev-use1-${env}`],
+    'dydy.io': ['//rcom.dynamicyield.com', '//st.dynamicyield.com', `cdn.use1.dev.pub.dydy.io/dev-use1-release`],
   };
   
   // the following line its for getting the URLs from the urls in 'dev' key
-  env = (env !== 'prod' && env !== 'eu') ? 'dev' : env
+  env = (env !== 'prod' && env !== 'eu' && env !== 'dydy.io') ? 'dev' : env
   
   const el = document.getElementById('preconnect')
   urls[env].forEach(element => {

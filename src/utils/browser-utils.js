@@ -131,7 +131,7 @@ function injectDYScripts(env, sectionId) {
     prod: ['//rcom.dynamicyield.com', '//st.dynamicyield.com', '//cdn.dynamicyield.com'],
     eu: ['//rcom-eu.dynamicyield.com', '//st-eu.dynamicyield.com', '//cdn-eu.dynamicyield.com'],
     dev: ['//rcom.dynamicyield.com', '//st.dynamicyield.com', `//cdn-dev.dynamicyield.com/dev-use1-${env}`],
-    'dydy.io': ['//rcom.dynamicyield.com', '//st.dynamicyield.com', `cdn.use1.dev.pub.dydy.io/dev-use1-release`],
+    'dydy.io': ['//rcom.dynamicyield.com', '//st.dynamicyield.com', '//cdn.use1.dev.pub.dydy.io/dev-use1-release'],
   };
   
   // the following line its for getting the URLs from the urls in 'dev' key

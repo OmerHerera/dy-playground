@@ -77,3 +77,4 @@ echo '127.0.0.1 dy-playground.com' | sudo tee -a /etc/hosts
 ```
 
 - Once we have the certificates ready, we need to trust them. Just double click on the certificate dy-playground.com.crt to install it.
+

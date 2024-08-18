@@ -1,4 +1,5 @@
 export const environments = [
+  { value: 'assembly', label: 'assembly' },
   { value: 'prod', label: 'prod' },
   { value: 'release', label: 'release' },
   { value: 'dydy.io', label: 'dydy.io' },

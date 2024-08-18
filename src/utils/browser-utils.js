@@ -132,10 +132,11 @@ function injectDYScripts(env, sectionId) {
     eu: ['//rcom-eu.dynamicyield.com', '//st-eu.dynamicyield.com', '//cdn-eu.dynamicyield.com'],
     dev: ['//rcom.dynamicyield.com', '//st.dynamicyield.com', `//cdn-dev.dynamicyield.com/dev-use1-${env}`],
     'dydy.io': ['//rcom.dynamicyield.com', '//st.dynamicyield.com', '//cdn.use1.dev.pub.dydy.io/dev-use1-release'],
+    'assembly': ['//rcom.dynamicyield.com', '//st.dynamicyield.com', '//cdn.dynamicyield.com'],
   };
   
   // the following line its for getting the URLs from the urls in 'dev' key
-  env = (env !== 'prod' && env !== 'eu' && env !== 'dydy.io') ? 'dev' : env
+  env = (env !== 'prod' && env !== 'eu' && env !== 'dydy.io' && env !== 'assembly') ? 'dev' : env
   
   const el = document.getElementById('preconnect')
   urls[env].forEach(element => {
@@ -145,6 +146,7 @@ function injectDYScripts(env, sectionId) {
     insertAfter(preconnectLinkEl, el);
   });
   const pathScript = urls[env][2];
-  document.getElementById('api_dynamic').src = `${pathScript}/api/${sectionId}/api_dynamic.js`;
-  document.getElementById('api_static').src = `${pathScript}/api/${sectionId}/api_static.js`;;
+  const api_dynamic = env === 'assembly' ? 'api_dynamic_assembly.js': 'api_dynamic.js'
+  document.getElementById('api_dynamic').src = `${pathScript}/api/${sectionId}/${api_dynamic}`;
+  document.getElementById('api_static').src = `${pathScript}/api/${sectionId}/api_static.js`;
 }
